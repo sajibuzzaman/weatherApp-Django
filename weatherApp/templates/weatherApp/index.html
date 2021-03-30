@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>WeatherApp|SajibUzzaman</title>
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '' %}img/sajib favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.css" />
+      <!-- Google Fonts -->
+      <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet"> 
+      <!-- CSS
+      ============================================ -->
+      <!-- Bootstrap CSS -->
+      <link rel="stylesheet" href="{% static '' %}css/bootstrap.min.css">
+      <!-- Icon Font CSS -->
+      <link rel="stylesheet" href="{% static '' %}css/font-awesome.min.css">
+      <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+      
+    
+     
+      
+</head>
+
+<body>
+
+    <section class="hero is-primary">
+        <div class="hero-body">
+            <div class="container">
+                <div class='row'>
+                      <!-- Header Social -->
+                      <div class="header-social col-md-4 col-12">
+                        <a href="http://www.facebook.com/sajibuzzaman98/"><i class="fa fa-facebook"></i></a>&nbsp &nbsp &nbsp
+                        <a href="http://www.twitter.com/uzzamansajib/"><i class="fa fa-twitter"></i></a>&nbsp &nbsp &nbsp
+                        <a href="http://www.linkedin.com/in/sajibuzzaman-bd/"><i class="fa fa-linkedin"></i></a>&nbsp &nbsp &nbsp
+                        <a href="http://www.instagram.com/sajib_uzzaman/"><i class="fa fa-instagram"></i></a>&nbsp &nbsp &nbsp
+                        <a href="http://www.youtube.com/sajibuzzaman/"><i class="fa fa-youtube"></i></a>
+                    </div>
+
+                    <!-- Header Logo -->
+                    <h1 class="title">
+                        What's the weather like?
+                    </h1>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="field has-addons">
+                            <div class="control is-expanded">
+                               {{form.name}}
+                            </div>
+                            <div class="control">
+                                <button class="button is-info">
+                                    Add City
+                                </button>
+                            </div>
+                        </div>
+                        
+                        {% if msg %}
+                            <div class="notification {{msgclass}}">
+                                {{msg}}
+                            </div>
+                        {% endif %}
+                            
+                        
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column is-offset-4 is-4">
+                    {% for a in weather %}
+
+
+                    <div class="box">
+                        <article class="media">
+                            <div class="media-left">
+                                <figure class="image is-50x50">
+                                    <img src="http://openweathermap.org/img/w/{{a.icon}}.png" alt="Image">
+                                </figure>
+                            </div>
+                            <div class="media-content">
+                                <div class="content">
+                                    <p>
+                                        <span class="title">{{a.city}}</span>
+                                        <br>
+                                        <span class="subtitle">{{a.temparature}}° C</span>
+                                        <br> {{a.description}}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="media-right">
+                                <a href="{%url 'weatherApp:city_delete' city_name=a.city%}">
+                                 <button class='delete'></button>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
+                     {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="footer">
+    </footer>
+
+    
+</body>
+
+</html> 
